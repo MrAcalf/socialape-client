@@ -9,6 +9,9 @@ import './App.css'
 import themeFile from './util/theme'
 import jwtDecode from 'jwt-decode'
 import AuthRoute from './util/AuthRoute'
+//Redux
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
 
 const theme = createMuiTheme(themeFile)
@@ -29,7 +32,7 @@ if(token){
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <Provider store={store}>
         <Router>
           <Navbar/>
           <div className='container'>        
@@ -40,7 +43,7 @@ function App() {
             </Switch>
           </div>
         </Router>
-      </div>
+      </Provider>      
     </ThemeProvider>
   )
 }
