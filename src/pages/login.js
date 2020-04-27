@@ -10,32 +10,9 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-const styles ={
-    form: {
-        textAlign: 'center'
-    },
-    image: {
-        margin: '20px auto 20px auto'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    textField: {
-        margin: '10px auto 10px auto'
-    },
-    button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    customError: {
-        color: 'red',
-        fontSize: '0.8rem',
-        marginTop: 10
-    },
-    progress: {
-        position: 'absolute'
-    }
-}
+const styles = (theme) => ({
+    ...theme.spreadThis
+})
 
 class login extends Component {
     constructor(){
@@ -60,6 +37,7 @@ class login extends Component {
         axios.post('/login', userData)
             .then((res) => {
                 console.log(res.data)
+                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
                 this.setState({
                     loading: false
                 })
@@ -86,7 +64,7 @@ class login extends Component {
             <Grid container className={classes.form}>
                 <Grid item sm/>
                 <Grid item sm>
-                    <img src={AppIcon} alt='monkey image icon'className={classes.image} />
+                    <img src={AppIcon} alt='monkey icon'className={classes.image} />
                     <Typography variant='h2' className={classes.pageTitle} >
                         Login                        
                     </Typography>
@@ -116,7 +94,9 @@ class login extends Component {
                         onChange={this.handleChange}
                         fullWidth />
                         {errors.general && (
-                            <Typography variant='body2' className={classes.customError}>
+                            <Typography 
+                            variant='body2' 
+                            className={classes.customError}>
                                 {errors.general}
                             </Typography>
                         )}
@@ -128,7 +108,9 @@ class login extends Component {
                         disabled={loading} >
                             Login
                             {loading && (
-                                <CircularProgress size={30} className={classes.progress} />
+                                <CircularProgress 
+                                size={30} 
+                                className={classes.progress} />
                             )}
                         </Button>
                         <br />
