@@ -9,6 +9,7 @@ import { Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import DeleteScream from './DeleteScream'
 // Icons
 import ChatIcon from '@material-ui/icons/Chat'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -19,6 +20,7 @@ import { likeScream, unlikeScream } from '../redux/actions/dataActions'
 
 const styles = {
     card: {
+        position: 'relative',
         display: 'flex',
         marginBottom: 20
     },
@@ -61,7 +63,7 @@ class Scream extends Component {
                 likeCount,
                 commentCount
             },
-            user: { authenticated }
+            user: { authenticated, credentials: { handle } }
         } = this.props
 
         const likeButton = !authenticated ? (
@@ -80,6 +82,10 @@ class Scream extends Component {
             </MyButton>
         )
 
+        const deleteButton = authenticated && userHandle === handle ? (
+            <DeleteScream screamId={screamId}/>
+        ) : null
+        
         return (
             <Card className={classes.card}>
                 <CardMedia 
@@ -95,6 +101,8 @@ class Scream extends Component {
                     variant='h5'
                     color='primary'
                     >{userHandle}</Typography>
+
+                    {deleteButton}
 
                     <Typography 
                     variant='body2' 
