@@ -20,8 +20,8 @@ import {UserActionTypes} from './redux/types';
 import {logoutUser,getUserData} from './redux/actions/userActions';
 
 const theme = createMuiTheme(themeFile);
-
 const token = localStorage.FBIdToken;
+axios.defaults.baseURL = 'https://us-east1-socialape-mra.cloudfunctions.net/api'
 
 if(token)
 {
